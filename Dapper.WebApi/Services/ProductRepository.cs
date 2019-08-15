@@ -19,25 +19,46 @@ namespace Dapper.WebApi.Services
         {
             _commandText = commandText;
             _configuration = configuration;
-
             _connStr = _configuration.GetConnectionString("Dapper");
         }
 
 
+        public List<Product> GetAllProducts()
+        {
+            var query = ExecuteCommand(_connStr,
+                   conn => conn.Query<Product>(_commandText.GetProducts)).ToList();
+            return query;
+        }
         public Product GetById(int id)
         {
-
-            var a = ExecuteCommand(_connStr,
-                   conn => conn.Query<Product>(_commandText.GetProductById));
-            var t = a.FirstOrDefault();
-            return t;
-
+            var product = ExecuteCommand<Product>(_connStr, conn =>
+                conn.Query<Product>(_commandText.GetProductById, new { @Id = id }).SingleOrDefault());
+            return product;
         }
-
-        public async Task AddProduct(Product entity)
+        public void AddProduct(Product entity)
         {
-
+            ExecuteCommand(_connStr, conn => {
+                var query = conn.Query<Product>(_commandText.AddProduct,
+                    new { Name = entity.Name, Cost = entity.Cost, CreatedDate = entity.CreatedDate });
+            });
         }
+        public void UpdateProduct(Product entity, int id)
+        {
+            ExecuteCommand(_connStr, conn =>
+            {
+                var query = conn.Query<Product>(_commandText.UpdateProduct,
+                    new { Name = entity.Name, Cost = entity.Cost, Id = id });
+            });
+        }
+
+        public void RemoveProduct(int id)
+        {
+            ExecuteCommand(_connStr, conn =>
+            {
+                var query = conn.Query<Product>(_commandText.RemoveProduct, new { Id = id });
+            });
+        }
+
 
         #region Helpers
 
@@ -59,7 +80,6 @@ namespace Dapper.WebApi.Services
                 return task(conn);
             }
         }
-
         #endregion
     }
 }

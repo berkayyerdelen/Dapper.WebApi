@@ -24,8 +24,26 @@ namespace Dapper.WebApi.Controllers
         [Route("{id}")]
         public ActionResult<Product> GetById(int id)
         {
-            var a = _productRepository.GetById(id);
-            return a;
+            var product = _productRepository.GetById(id);
+            return Ok(product);
+        }
+        [HttpPost]
+        public ActionResult AddProduct(Product entity)
+        {
+            _productRepository.AddProduct(entity);
+            return Ok(entity);
+        }
+        [HttpPut("{id}")]
+        public ActionResult<Product> Update(Product entity, int id)
+        {
+            _productRepository.UpdateProduct(entity, id);
+            return Ok(entity);
+        }
+        [HttpDelete("{id}")]
+        public ActionResult<Product> Delete(int id)
+        {
+            _productRepository.RemoveProduct(id);
+            return Ok();
         }
     }
 }
