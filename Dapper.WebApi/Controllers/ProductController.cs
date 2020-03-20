@@ -21,6 +21,13 @@ namespace Dapper.WebApi.Controllers
         }
 
         [HttpGet]
+        public ActionResult GellAll()
+        {
+           var products= _productRepository.GetAllProducts();
+            return Ok(products);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public ActionResult<Product> GetById(int id)
         {

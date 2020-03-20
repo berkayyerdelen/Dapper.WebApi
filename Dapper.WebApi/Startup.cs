@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper.WebApi.Services;
+using Dapper.WebApi.Services.ExecuteCommands;
 using Dapper.WebApi.Services.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,8 +28,9 @@ namespace Dapper.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IExecuters, Executers>();
             services.AddTransient<ICommandText, CommandText>();
+            services.AddTransient<IProductRepository, ProductRepository>();           
             services.AddMvc();
             services.AddControllers();
         }
