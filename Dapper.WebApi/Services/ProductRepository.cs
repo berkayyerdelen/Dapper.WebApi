@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper.WebApi.Extensions;
 using Dapper.WebApi.Models;
 using Dapper.WebApi.Services.ExecuteCommands;
 using Dapper.WebApi.Services.Queries;
