@@ -32,6 +32,13 @@ namespace Dapper.WebApi.Services
                    conn => conn.Query<Product>(_commandText.GetProducts)).ToList();
             return query;
         }
+        public List<Product> GetProductByIdSp(int id)
+        {
+            var query = _executers.ExecuteCommand(_connStr,
+                conn => conn.Query<Product>(_commandText.GetProductByIdSp, 
+                    new { id = id }, commandType: CommandType.StoredProcedure)).ToList();
+            return query;
+        }
         public Product GetById(int id)
         {
             var product = _executers.ExecuteCommand<Product>(_connStr, conn =>
@@ -40,7 +47,8 @@ namespace Dapper.WebApi.Services
         }
         public void AddProduct(Product entity)
         {
-            _executers.ExecuteCommand(_connStr, conn => {
+            _executers.ExecuteCommand(_connStr, conn =>
+            {
                 var query = conn.Query<Product>(_commandText.AddProduct,
                     new { Name = entity.Name, Cost = entity.Cost, CreatedDate = entity.CreatedDate });
             });
@@ -63,6 +71,6 @@ namespace Dapper.WebApi.Services
         }
 
 
-     
+
     }
 }

@@ -34,6 +34,13 @@ namespace Dapper.WebApi.Controllers
             var product = _productRepository.GetById(id);
             return Ok(product);
         }
+        [HttpGet]
+        [Route("SP/{id}")]
+        public ActionResult<Product> GetByIdSp(int id)
+        {
+            var product = _productRepository.GetProductByIdSp(id);
+            return Ok(product);
+        }
         [HttpPost]
         public ActionResult AddProduct(Product entity)
         {

@@ -13,5 +13,6 @@ namespace Dapper.WebApi.Services
         void UpdateProduct(Product entity, int id);
         void RemoveProduct(int id);
         List<Product> GetAllProducts();
+        List<Product> GetProductByIdSp(int id);
     }
 }

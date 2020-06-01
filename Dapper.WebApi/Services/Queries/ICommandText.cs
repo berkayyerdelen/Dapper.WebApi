@@ -12,5 +12,6 @@ namespace Dapper.WebApi.Services.Queries
         string AddProduct { get; }
         string UpdateProduct { get; }
         string RemoveProduct { get; }
+        string GetProductByIdSp { get; }
     }
 }
