@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper.WebApiTests", "Dapper.WebApiTests\Dapper.WebApiTests.csproj", "{9E7F5581-8D1A-4380-95B0-5E6738758B1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{1E340C40-321F-4766-BE1C-4F1FA6383932}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E340C40-321F-4766-BE1C-4F1FA6383932}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E340C40-321F-4766-BE1C-4F1FA6383932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E7F5581-8D1A-4380-95B0-5E6738758B1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7F5581-8D1A-4380-95B0-5E6738758B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7F5581-8D1A-4380-95B0-5E6738758B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7F5581-8D1A-4380-95B0-5E6738758B1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
