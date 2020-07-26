@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using Dapper.WebApi.Models;
+﻿using Dapper.WebApi.Models;
+using Dapper.WebApi.Services.DapperHelpers;
 using Dapper.WebApi.Services.Queries;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Threading.Tasks;
 
 namespace Dapper.WebApi.Services
 {
-    public class ProductRepository :BaseRepository, IProductRepository
+    public class ProductRepository : BaseRepository, IProductRepository
     {
         private readonly ICommandText _commandText;
+        private readonly IDapperHelper _dapperHelper;
 
-        public ProductRepository(IConfiguration configuration, ICommandText commandText) : base(configuration)
+        public ProductRepository(ICommandText commandText, DbConnection connection, IDapperHelper dapperHelper) : base(connection)
         {
             _commandText = commandText;
-
+            _dapperHelper = dapperHelper;
         }
 
 
@@ -26,7 +24,7 @@ namespace Dapper.WebApi.Services
 
             return await WithConnection(async conn =>
             {
-                var query = await conn.QueryAsync<Product>(_commandText.GetProducts);
+                var query = await _dapperHelper.GetAllProducts<Product>(conn, _commandText.GetProducts);
                 return query;
             });
 
@@ -36,7 +34,7 @@ namespace Dapper.WebApi.Services
         {
             return await WithConnection(async conn =>
             {
-                var query = await conn.QueryFirstOrDefaultAsync<Product>(_commandText.GetProductById, new { Id = id });
+                var query = await _dapperHelper.GetById<Product>(conn, id, _commandText.GetProductById);
                 return query;
             });
 
@@ -46,8 +44,7 @@ namespace Dapper.WebApi.Services
         {
             await WithConnection(async conn =>
             {
-                await conn.ExecuteAsync(_commandText.AddProduct,
-                    new { Name = entity.Name, Cost = entity.Cost, CreatedDate = entity.CreatedDate });
+                await _dapperHelper.AddProduct(conn, entity, _commandText.AddProduct);
             });
 
         }
@@ -55,8 +52,7 @@ namespace Dapper.WebApi.Services
         {
             await WithConnection(async conn =>
             {
-                await conn.ExecuteAsync(_commandText.UpdateProduct,
-                    new { Name = entity.Name, Cost = entity.Cost, Id = id });
+                await _dapperHelper.UpdateProduct(conn, entity, id, _commandText.UpdateProduct);
             });
 
         }
@@ -66,7 +62,7 @@ namespace Dapper.WebApi.Services
 
             await WithConnection(async conn =>
             {
-                await conn.ExecuteAsync(_commandText.RemoveProduct, new { Id = id });
+                await _dapperHelper.RemoveProduct(conn, id, _commandText.RemoveProduct);
             });
 
         }

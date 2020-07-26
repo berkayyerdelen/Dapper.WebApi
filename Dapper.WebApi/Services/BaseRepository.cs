@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
-using System.Linq;
+using System.Data.Common;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace Dapper.WebApi.Services
 {
     public abstract class BaseRepository
     {
-        private readonly IConfiguration _configuration;
-        private readonly string _connectionString;
+        private readonly DbConnection _connection;
 
-
-        protected BaseRepository(IConfiguration configuration)
+        protected BaseRepository(DbConnection connection)
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+            _connection = connection;
         }
 
         // use for buffered queries that return a type
@@ -25,11 +20,8 @@ namespace Dapper.WebApi.Services
         {
             try
             {
-                await using (var connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    return await getData(connection);
-                }
+                await _connection.OpenAsync();
+                return await getData(_connection);
             }
             catch (TimeoutException ex)
             {
@@ -48,11 +40,8 @@ namespace Dapper.WebApi.Services
         {
             try
             {
-                await using (var connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    await getData(connection);
-                }
+                await _connection.OpenAsync();
+                await getData(_connection);
             }
             catch (TimeoutException ex)
             {
@@ -72,12 +61,9 @@ namespace Dapper.WebApi.Services
         {
             try
             {
-                await using (var connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-                    var data = await getData(connection);
-                    return await process(data);
-                }
+                await _connection.OpenAsync();
+                var data = await getData(_connection);
+                return await process(data);
             }
             catch (TimeoutException ex)
             {
