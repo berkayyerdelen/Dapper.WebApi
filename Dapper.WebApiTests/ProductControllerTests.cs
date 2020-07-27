@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace Dapper.WebApiTests
 {
-    public class ProductControllerTests
+    [TestFixture]
+    internal class ProductControllerTests
     {
         private Mock<IProductRepository> _productRepositoryMock;
         private ProductController _productController;

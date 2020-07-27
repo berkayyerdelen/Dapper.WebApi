@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Dapper.WebApi.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Dapper.WebApi.Models;
 
 namespace Dapper.WebApi.Services
 {

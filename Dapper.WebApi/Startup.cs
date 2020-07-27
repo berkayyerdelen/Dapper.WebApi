@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper.WebApi.Services;
+using Dapper.WebApi.Services.DapperHelpers;
 using Dapper.WebApi.Services.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Data.Common;
 
 namespace Dapper.WebApi
 {
@@ -29,6 +25,15 @@ namespace Dapper.WebApi
         {
             services.AddTransient<ICommandText, CommandText>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<DbConnection, SqlConnection>(provider =>
+            {
+                return new SqlConnection
+                {
+                    ConnectionString = Configuration.GetConnectionString("DefaultConnection")
+                };
+            });
+            services.AddTransient<IDapperHelper, DapperHelper>();
+
             services.AddMvc();
 
 

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dapper.WebApi.Models;
+﻿using Dapper.WebApi.Models;
 using Dapper.WebApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Dapper.WebApi.Controllers
 {
