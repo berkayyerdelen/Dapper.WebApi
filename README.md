@@ -29,3 +29,12 @@ This part has come from https://github.com/workcontrolgit (S)He has contributed 
 
 #Credit
 The base class to manage the connection string is from https://www.joesauve.com/async-dapper-and-async-sql-connection-management/
+
+This part has come from https://github.com/Arnab-Developer He has contributed this part.
+
+
+## Unit Tests
+- Added Unit tests for ProductController and Product repository
+
+## DapperHelper Imp
+- Added Dapper implementation for seperate the dapper dependency for database accessing.
