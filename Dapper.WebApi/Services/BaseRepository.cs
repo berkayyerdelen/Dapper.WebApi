@@ -34,6 +34,10 @@ namespace Dapper.WebApi.Services
                     String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)",
                         GetType().FullName), ex);
             }
+            finally
+            {
+               await _connection.CloseAsync();
+            }
         }
 
         protected async Task WithConnection(Func<IDbConnection, Task> getData)
@@ -53,6 +57,10 @@ namespace Dapper.WebApi.Services
                 throw new Exception(
                     String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)",
                         GetType().FullName), ex);
+            }
+            finally
+            {
+                await _connection.CloseAsync();
             }
         }
 
@@ -75,6 +83,10 @@ namespace Dapper.WebApi.Services
                 throw new Exception(
                     String.Format("{0}.WithConnection() experienced a SQL exception (not a timeout)",
                         GetType().FullName), ex);
+            }
+            finally
+            {
+                await _connection.CloseAsync();
             }
         }
     }
