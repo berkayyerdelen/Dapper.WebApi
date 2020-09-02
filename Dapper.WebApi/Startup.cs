@@ -1,5 +1,4 @@
 using Dapper.WebApi.Services;
-using Dapper.WebApi.Services.DapperHelpers;
 using Dapper.WebApi.Services.Queries;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,15 +24,6 @@ namespace Dapper.WebApi
         {
             services.AddTransient<ICommandText, CommandText>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<DbConnection, SqlConnection>(provider =>
-            {
-                return new SqlConnection
-                {
-                    ConnectionString = Configuration.GetConnectionString("DefaultConnection")
-                };
-            });
-            services.AddTransient<IDapperHelper, DapperHelper>();
-
             services.AddMvc();
 
 
